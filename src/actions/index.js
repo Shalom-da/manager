@@ -1,5 +1,5 @@
 import firebase from 'firebase';
-
+import { Actions } from 'react-native-router-flux';
 import {
   EMAIL_CHANGED,
   PASSWORD_CHANGED,
@@ -33,7 +33,8 @@ export const loginUser = ({ email, password }) => {
         //the dispatch is called only after the request complete.
         //once its complete, we pass the action manually using the dispatch
 
-      .catch(() => {
+      .catch((error) => {
+        //console.log(error);
         firebase.auth().createUserWithEmailAndPassword(email, password)
           .then(user => loginUserSuccess(dispatch, user))
           .catch(() => loginUserFailed(dispatch));
@@ -52,4 +53,6 @@ const loginUserSuccess = (dispatch, user) => {
     type: LOGIN_USER_SUCCESS,
     payload: user
   });
+
+  Actions.main();
 };

@@ -7,7 +7,7 @@ import { View } from 'react-native';
 import firebase from 'firebase';
 import ReduxThunk from 'redux-thunk';
 import reducers from './reducers';
-import LoginForm from './components/LoginForm';
+import Router from './Router';
 
 class App extends Component {
   componentWillMount() {
@@ -30,9 +30,7 @@ class App extends Component {
     //the store, like we do here with redux-thunk.
     return (
     <Provider store={store}>
-      <View>
-        <LoginForm />
-      </View>
+      <Router />
     </Provider>
   );
   }
