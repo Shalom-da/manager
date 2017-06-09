@@ -37,12 +37,17 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state,
         user: action.payload,
         error: '',
-        loading: false, 
+        loading: false,
         password: '',
         email: ''
       };
     case LOGIN_USER_FAILED:
-      return { ...state, error: 'authentication failed', password: '', loading: false };
+      return {
+        ...state,
+        error: 'authentication failed',
+        password: '',
+        loading: false 
+      };
     case LOGIN_USER:
       return { ...state, loading: true, error: '' };
     default:
