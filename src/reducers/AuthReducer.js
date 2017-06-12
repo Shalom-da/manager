@@ -19,7 +19,7 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
   //state = INITIAL_STATE is using the INITIAL_STATE in case the state is undefined.
 
-  console.log(action);
+  //console.log(action);
   switch (action.type) {
     case EMAIL_CHANGED:
     {
@@ -46,7 +46,7 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         error: 'authentication failed',
         password: '',
-        loading: false 
+        loading: false
       };
     case LOGIN_USER:
       return { ...state, loading: true, error: '' };

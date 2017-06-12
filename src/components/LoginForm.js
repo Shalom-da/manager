@@ -5,6 +5,11 @@ import { Card, CardSection, Input, Button, Spinner } from './common';
 import { emailChanged, passwordChanged, loginUser } from '../actions';
 
 class LoginForm extends Component {
+  //DEBUG for login automatically
+  componentWillMount() {
+    this.props.loginUser({ email: 'test@test.com', password: '123456' });
+  }
+
   onEmailChange(text) {
     this.props.emailChanged(text);
     //since we bind this componenet to the emailChanged action creator,
@@ -34,6 +39,7 @@ class LoginForm extends Component {
       </Button>
     );
   }
+
 
   render() {
     return (

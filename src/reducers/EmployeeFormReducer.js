@@ -1,5 +1,6 @@
 import {
-  EMPLOYEE_UPDATE
+  EMPLOYEE_UPDATE,
+  EMPLOYEE_CREATE,
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -9,7 +10,7 @@ const INITIAL_STATE = {
 };
 
 export default (state = INITIAL_STATE, action) => {
-  console.log(action);
+  //console.log(action);
   switch (action.type) {
     case EMPLOYEE_UPDATE:
     // action.payload === { prop: 'name', value: 'jane'}
@@ -22,6 +23,14 @@ export default (state = INITIAL_STATE, action) => {
           //newState[action.payload.prop] = action.payload.value
           //return { newState }
     }
+    case EMPLOYEE_CREATE:
+    {
+      //want to reset the form (employee create componenet) after the firebase
+      //added the employee to the list. So that when the user clicks "add" again,
+      //the form is empty abd not containing the previoues added employee
+      return INITIAL_STATE;
+    }
+
     default:
     {
       return state;
