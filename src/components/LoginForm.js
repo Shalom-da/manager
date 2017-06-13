@@ -6,9 +6,9 @@ import { emailChanged, passwordChanged, loginUser } from '../actions';
 
 class LoginForm extends Component {
   //DEBUG for login automatically
-  componentWillMount() {
-    this.props.loginUser({ email: 'test@test.com', password: '123456' });
-  }
+  // componentWillMount() {
+  //   this.props.loginUser({ email: 'test@test.com', password: '123456' });
+  // }
 
   onEmailChange(text) {
     this.props.emailChanged(text);
