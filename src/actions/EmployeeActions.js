@@ -3,7 +3,8 @@ import { Actions } from 'react-native-router-flux';
 import {
   EMPLOYEE_UPDATE,
   EMPLOYEE_CREATE,
-  EMPLOYEES_FETCH_SUCCESS
+  EMPLOYEES_FETCH_SUCCESS,
+  EMPLOYEE_SAVE_SUCCESS
 } from './types';
 
 export const employeeUpdate = ({ prop, value }) => {
@@ -39,6 +40,39 @@ export const employeeCreate = ({ name, phone, shift }) => {
   //payload: { name, phone, shift  }
 };
 
+
+export const employeeSave = ({ name, phone, shift, uid }) => {
+  //gets the value of the current login user:
+  const { currentUser } = firebase.auth();
+
+  //the return is to satisfy redux-thunk. We do mot really need to do
+  //anything afgter we added the employeee to firebase. So we "fake" the reduc thunk.
+  //we do not really send an action. No dispatch. Just wrapping with return function.
+  return (dispatch) => {
+    //in firebase, get reference to '/users/uid/employees'. this is the firebase
+    //data store JSON structure.
+    //we use the ` ` and the ${var_name} as an ES6 trick to build the
+    //string as above, with the current user id var.
+    firebase.database().ref(`/users/${currentUser.uid}/employees/${uid}`)
+      //then we push the employee to this JSON location
+
+      //console.log('saved');
+       .set({ name, phone, shift })
+       .then(() => {
+         dispatch({ type: EMPLOYEE_SAVE_SUCCESS });
+         Actions.employeeList({ type: 'reset' });
+       });
+      // .then(() => {
+      //   dispatch({ type: EMPLOYEE_CREATE });
+      //   Actions.employeeList({ type: 'reset' }); // navigating back to employee list
+      // });
+      //type: 'reset' is reseting the "stack" of the router. removes the back button.
+  };
+
+  //type: EMPLOYEE_CREATE,
+  //payload: { name, phone, shift  }
+};
+
 export const employeesFetch = () => {
   const { currentUser } = firebase.auth();
   return (dispatch) => {
@@ -53,5 +87,17 @@ export const employeesFetch = () => {
         //this will exist for the entire lifecycle of the application.
         dispatch({ type: EMPLOYEES_FETCH_SUCCESS, payload: snapshot.val() });
       });
+  };
+};
+
+export const employeeDelete = ({ uid }) => {
+  const { currentUser } = firebase.auth();
+
+  return () => {
+    firebase.database().ref(`/users/${currentUser.uid}/employees/${uid}`)
+       .remove()
+       .then(() => {
+         Actions.employeeList({ type: 'reset' });
+       });
   };
 };
